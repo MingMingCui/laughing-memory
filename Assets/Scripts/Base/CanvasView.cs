@@ -31,6 +31,9 @@ public class CanvasView : MonoBehaviour {
 
     public GameObject ConnectObj = null;
 
+    private readonly float designWidth = 1920f;
+    private readonly float designHeight = 1080f;
+
     public static CanvasView Instance
     {
         get
@@ -60,6 +63,11 @@ public class CanvasView : MonoBehaviour {
         if(EnableDebugUILine)
             this.gameObject.AddComponent<DebugUILine>();
 #endif
+
+        //调整分辨率
+        float designAspect = designWidth / designHeight;
+        float aspect = Screen.width / Screen.height;
+        this.GetComponent<CanvasScaler>().matchWidthOrHeight = (aspect > designAspect ? 1 : 0);
     }
 
     public void AddNotice(string notice)

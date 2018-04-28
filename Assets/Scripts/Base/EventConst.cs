@@ -150,7 +150,7 @@ public class EventConst{
     //=========================招募相关==================================
     public static readonly string ShowOneLuckyDrawResults = "ShowOneLuckyDrawResults";
 
-  //  public static readonly string ShowTenLuckyDrawResults = "ShowTenLuckyDrawResults";
+    public static readonly string ShowTenLuckyDrawResults = "ShowTenLuckyDrawResults";
 
     public static readonly string ShowAllHeros = "ShowAllHeros";
     //=========================招募相关==================================

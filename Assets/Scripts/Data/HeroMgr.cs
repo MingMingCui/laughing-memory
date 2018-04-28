@@ -53,10 +53,7 @@ public class HeroMgr
             datas.AddRange(HerosContainer.Values);
             _sortHero(datas);
             HeroData[] ret = new HeroData[datas.Count];
-            for (int i = 0; i < ret.Length; ++i)
-            {
-                ret[i] = datas[i];
-            }
+            datas.CopyTo(ret);
             ListPool<HeroData>.Release(datas);
             return ret;
         }

@@ -22,7 +22,7 @@ public class ArenaView : ArenaViewBase {
                 HeroHeadView view = HeroHeadGo.GetComponent<HeroHeadView>();
                 view.Init();
                 _heroHeads.Add(view);
-            }  
+            }
         }
 
         for (int idx = 0; idx < _heroHeads.Count; ++idx)

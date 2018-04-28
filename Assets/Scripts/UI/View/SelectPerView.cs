@@ -7,10 +7,10 @@ using UnityEngine.UI;
 
 public enum RoleSort
 {
-    ManFirst = 20026,
-    ManSecond,
-    WomanFirst,
-    WomanSecond
+    ManFirst = 11010,
+    ManSecond = 11020,
+    WomanFirst = 11030,
+    WomanSecond = 11040
 }
 
 public class SelectPerView : SelectPerViewBase
@@ -27,39 +27,34 @@ public class SelectPerView : SelectPerViewBase
     public int isMan = 1;
     private Transform ManRole;
     private Transform WomanRole;
-    private List<string> ShieldWordList; //屏蔽字库
     private Dictionary<int, Animator> RolePlayer = new Dictionary<int, Animator>();
     private bool scale = false;
     private bool isRoleMan = true;
     public void Init()
     {
-        string ShieldWord = ResourceMgr.Instance.LoadData("ShieldWord");
-        ShieldWordList = ShieldWord.Split(new string[] { "\r\n" }, StringSplitOptions.None).ToList();
-        ShieldWordList = ShieldWordList.Where(s => !string.IsNullOrEmpty(s)).ToList(); //检查是否有空字符串
-
         role = RoleSort.ManFirst;
-        GameObject Login;
-        GameObject SelectPer;
-        Login = GameObject.Find("Login").gameObject;
+        GameObject Login= null;
+        GameObject SelectPer = null;
+        Login = GameObject.Find("Login(Clone)").gameObject;
         SelectPer = GameObject.Find("SelectPer").gameObject;
         SetChildLayer(Login,9);
         SetChildLayer(SelectPer, 0);
         ManRole = SelectPer.transform.Find("ManRole").transform;
         WomanRole = SelectPer.transform.Find("WomanRole").transform;
-        int idx = 20026;
+        int idx = 11010;
         foreach (Transform item in ManRole)
         {
             ManRoleList.Add(item.gameObject);
             RolePlayer.Add(idx, item.GetComponent<Animator>());
-            idx++;
+            idx +=10;
         }
         foreach (Transform item in WomanRole)
         {
             RolePlayer.Add(idx, item.GetComponent<Animator>());
             WomanRoleList.Add(item.gameObject);
-            idx++;
+            idx += 10;
         }
-        Import_input.text = JsonMgr.GetSingleton().RandomName(true);
+        Import_input.text = JsonMgr.GetSingleton().RandomName(isMan);
     }
     /// <summary>
     /// 更改显示层级
@@ -245,36 +240,17 @@ public class SelectPerView : SelectPerViewBase
             Special.PlayForward();
         }
     }
-/// <summary>
-/// 判断是否包含屏蔽字
-/// </summary>
-/// <param name="_name"></param>
-/// <returns></returns>
-    public bool ExamineShieldWord(string _name)
-    {
-        bool isInclude = true;
-        for (int idx = 0; idx < ShieldWordList.Count; idx++)
-        {
-            if (_name.IndexOf(ShieldWordList[idx]) != -1)
-            {
-                isInclude = false;
-                return isInclude;
-            }
-        }
-        return isInclude;
-    }
 
     /// <summary>
     /// 获取随机名字
     /// </summary>
     public void GetName()
     {
-        bool idman = false;
         if (Man_tog.isOn || Man1_tog.isOn)
-            idman = true;
+            isMan = 1;
         else
-            idman = false;
-      Import_input.text = JsonMgr.GetSingleton().RandomName(idman);
+            isMan = 2;
+      Import_input.text = JsonMgr.GetSingleton().RandomName(isMan);
     }
 
 }

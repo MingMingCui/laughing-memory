@@ -40,6 +40,8 @@ public class StrengthenViewBase : UIViewBase
     [HideInInspector]
     public Button strengthenonekey_btn;
     [HideInInspector]
+    public Image StrengthenOK_img;
+    [HideInInspector]
     public GameObject Advanced_obj;
     [HideInInspector]
     public Transform parent_trf;
@@ -112,6 +114,7 @@ public class StrengthenViewBase : UIViewBase
         spend_txt = mTransform.Find("Strengthen_obj/Text/spend_txt").GetComponent<Text>();
         strengthen_btn = mTransform.Find("Strengthen_obj/strengthen_btn").GetComponent<Button>();
         strengthenonekey_btn = mTransform.Find("Strengthen_obj/strengthenonekey_btn").GetComponent<Button>();
+        StrengthenOK_img = mTransform.Find("Strengthen_obj/StrengthenOK_img").GetComponent<Image>();
         Advanced_obj = mTransform.Find("Advanced_obj").gameObject;
         parent_trf = mTransform.Find("Advanced_obj/parent_trf").GetComponent<Transform>();
         attr_obj = mTransform.Find("Advanced_obj/Image/attr_obj").gameObject;
@@ -138,5 +141,5 @@ public class StrengthenViewBase : UIViewBase
         finerandom_btn = mTransform.Find("Random_obj/finerandom_btn").GetComponent<Button>();
         replace_btn = mTransform.Find("Random_obj/replace_btn").GetComponent<Button>();
         lock_trf = mTransform.Find("Random_obj/lock_trf").GetComponent<Transform>();
-    }
+    }
 }

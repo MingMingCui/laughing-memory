@@ -1484,10 +1484,11 @@ public class FightUnit{
         {
             this.PathFinderObj.Update(delta);
         }
-
-        _updateSkill(delta);
-
-        this.BuffMgrObj.Update();
+        if (!FightLogic.Instance.FightPause)
+        {
+            _updateSkill(delta);
+            this.BuffMgrObj.Update();
+        }
 	}
 
 
@@ -1543,8 +1544,7 @@ public class FightUnit{
         }
         //通知技能受体的View显示受击特效
         ZEventSystem.Dispatch(EventConst.OnFightUnitTakenEffect, skillTarget, ceffect);
-        //通知技能主体的View显示投掷特效
-        ZEventSystem.Dispatch(EventConst.OnFightUnitTakeEffect, this, _cskill);
+        
 
         int effectType = ceffect["effect"].ToObject<int>();
         int paramType = ceffect["paramtype"].ToObject<int>();
@@ -2057,6 +2057,7 @@ public class FightUnit{
                                 if (_cradleCur >= _cradleTime)
                                 {
                                     SklState = SkillState.Effect;
+                                    ZEventSystem.Dispatch(EventConst.OnSkillTakeEffect, this, this._cskill);
                                 }
                             }
                         }
@@ -2070,7 +2071,6 @@ public class FightUnit{
                                 Interrupt();
                                 return;
                             }
-                            ZEventSystem.Dispatch(EventConst.OnSkillTakeEffect, this, this._cskill);
                             if (--this._effectTimes <= 0)
                             {
                                 SklState = SkillState.Post;

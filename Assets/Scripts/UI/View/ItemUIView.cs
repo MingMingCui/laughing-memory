@@ -29,6 +29,10 @@ public class ItemUIView : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     public bool isShow =false;
     [HideInInspector]
     public RectTransform tran;
+    [HideInInspector]
+    public GameObject itemname_obj;
+    [HideInInspector]
+    public Text itemname_txt;
     public void Init()
     {
         Transform mTransform = this.transform;
@@ -40,6 +44,8 @@ public class ItemUIView : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
         num_txt = mTransform.GetComponentInChildren<Text>();
         itemlevelbg_btn = mTransform.GetComponent<Button>();
         shade_obj = mTransform.Find("shade_obj").gameObject;
+        itemname_obj = mTransform.Find("itemname_obj").gameObject;
+        itemname_txt = mTransform.Find("itemname_obj/itemname_txt").GetComponent<Text>();
     }
 
 
@@ -54,7 +60,8 @@ public class ItemUIView : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
         item_mask.enabled = ic.type == FuncType.PIECES;
         itemLevelbg_img.sprite = ResourceMgr.Instance.LoadSprite(ColorMgr.Border[ic.rare - 1]);
         itemImg_img.sprite = ResourceMgr.Instance.LoadSprite(ic.icon);
-        num_txt.text = itemnum > 0 ? itemnum.ToString() : "";
+        num_txt.text = itemnum > 1 ? itemnum.ToString() : "";
+        itemname_txt.text = ic.name;
     }
     void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
     {
@@ -64,7 +71,7 @@ public class ItemUIView : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     {
         if (isShow)
         {
-            TipsMgr.OpenItemTip(tran.localPosition, itemUIid, Alignment.M, new Vector2(0, -100));
+            TipsMgr.OpenItemTip(new Vector2(tran.localPosition.x,Input.mousePosition.y) , itemUIid, Alignment.CT, new Vector2(50,349));
         }
     }
 }

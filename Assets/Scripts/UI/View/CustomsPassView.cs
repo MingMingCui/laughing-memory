@@ -13,12 +13,16 @@ public class CustomsPassView: CustomsPassViewBase
     public List<EnemyView> EnemyIcoList = new List<EnemyView>();
     [HideInInspector]
     public List<ItemUIView> Drop_TipList = new List<ItemUIView>();
+    [HideInInspector]
+    public int Power;
     public void Init()
     {
         BattleMgr.Instance.isOff = false;
         int stra = BattleMgr.Instance.GetStar(BattleMgr.Instance.LevelID);
         LevelData data = JsonMgr.GetSingleton().GetLevel(BattleMgr.Instance.LevelID);
+        Power = data.power;
         intro_txt.text = data.desc; //简介
+        power_txt.color = Role.Instance.Power < data.power ? Color.red : Color.white;
         power_txt.text = data.power.ToString();//体力消耗
         combat_txt.text = data.combat_effect.ToString();
         name_txt.text = data.name;

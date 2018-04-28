@@ -72,7 +72,8 @@ public class FightUnitView : MonoBehaviour {
             ZEventSystem.Register(EventConst.OnRequestUnitPause, this, "OnRequestUnitPause");
             ZEventSystem.Register(EventConst.ForceDestroyView, this, "ForceDestroyView");
             ZEventSystem.Register(EventConst.OnFightUnitInterrupt, this, "OnFightUnitInterrupt");
-            ZEventSystem.Register(EventConst.OnFightUnitTakeEffect, this, "OnFightUnitTakeEffect");
+            //ZEventSystem.Register(EventConst.OnFightUnitTakeEffect, this, "OnFightUnitTakeEffect");
+            ZEventSystem.Register(EventConst.OnSkillTakeEffect, this, "OnSkillTakeEffect");
         }
         else
         {
@@ -86,7 +87,8 @@ public class FightUnitView : MonoBehaviour {
             ZEventSystem.DeRegister(EventConst.OnRequestUnitPause, this);
             ZEventSystem.DeRegister(EventConst.ForceDestroyView, this);
             ZEventSystem.DeRegister(EventConst.OnFightUnitInterrupt, this);
-            ZEventSystem.DeRegister(EventConst.OnFightUnitTakeEffect, this);
+            //ZEventSystem.DeRegister(EventConst.OnFightUnitTakeEffect, this);
+            ZEventSystem.DeRegister(EventConst.OnSkillTakeEffect, this);
         }
     }
 
@@ -128,7 +130,7 @@ public class FightUnitView : MonoBehaviour {
     /// </summary>
     /// <param name="unit"></param>
     /// <param name="cskill"></param>
-    public void OnFightUnitTakeEffect(FightUnit unit, Skill cskill)
+    public void OnSkillTakeEffect(FightUnit unit, Skill cskill)
     {
         if (this.unit != unit || cskill == null)
             return;

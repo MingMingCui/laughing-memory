@@ -152,7 +152,10 @@ public class StrengthenView : StrengthenViewBase
         thenlv_txt.text = "+" + (equip.StrengthenLv + 1); 
         EventListener.Get(strengthen_btn.gameObject).OnClick = e =>
         {
-            EquipMgr.GetSingleton().UpEquip(equip);
+            if(EquipMgr.GetSingleton().UpEquip(equip))
+            {
+                StrengthenOK_img.GetComponent<UISprite>().Play();
+            }
             SetStrengthenView();
         };
         EventListener.Get(strengthenonekey_btn.gameObject).OnClick = e =>
@@ -344,7 +347,7 @@ public class StrengthenView : StrengthenViewBase
         }
         newattr_txt.text = temp.ToString();
 
-        randomspend_txt.text = JsonMgr.GetSingleton().GetGlobalIntArrayByID(expend).ToString();
+        randomspend_txt.text = JsonMgr.GetSingleton().GetGlobalIntArrayByID(expend).value.ToString();
     }
 
     public void Close()

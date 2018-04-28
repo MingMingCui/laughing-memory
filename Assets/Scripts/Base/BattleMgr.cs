@@ -129,7 +129,7 @@ public class BattleMgr : Singleton<BattleMgr>
     /// <summary>
     /// 进去战斗
     /// </summary>
-    public void BeginCombat(int id)
+    public void BeginCombat(int id, int power)
     {
 
         List<Vector2Int> stubData = Role.Instance.GetStubData(StubType.PVE);
@@ -149,7 +149,9 @@ public class BattleMgr : Singleton<BattleMgr>
                 });
             return;
         }
+        Role.Instance.Power -= power;
         StartFight(id);
+
     }
 
     public void StartFight(int id)
@@ -214,7 +216,7 @@ public class BattleMgr : Singleton<BattleMgr>
                         }
                         else
                         {
-                            Debug.Log("次数不足");
+                            CanvasView.Instance.AddNotice("次数不足");
                             break;
                         }
                     }

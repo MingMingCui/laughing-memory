@@ -194,20 +194,22 @@ public class EquipMgr
         return (int)part - 1;
     }
 
-    public void UpEquip(EquipData equip)
+    public bool UpEquip(EquipData equip)
     {
         if (equip == null)
-            return;
+            return false;
         if(_id.ContainsKey(equip.md5))
         {
             if(equip.StrengthenLv >= Role.Instance.Level)
             {
                 CanvasView.Instance.AddNotice("升级主公等级开放更多");
-                return;
+                return false;
             }
             equip.StrengthenLv++;
 
             _id[equip.md5] = equip;
+            return true;
         }
+        return false;
     }
 }

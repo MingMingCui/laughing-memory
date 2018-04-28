@@ -24,7 +24,7 @@ public class TestShopUI : MonoBehaviour {
             {
                 Goods goods = new Goods();
                 goods.currencyType = Random.Range(1, 3);
-                goods.goodsId = 1001 + j;
+                goods.goodsId = 2000 + j;
                 goods.goodsNum = 1 + j;
                 goods.goodsPrice = i * 100 + j * 10;
                 _goods.Add(goods);

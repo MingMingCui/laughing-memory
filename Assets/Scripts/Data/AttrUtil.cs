@@ -492,6 +492,10 @@ public class AttrUtil
                 return new Vector2(0, user.MaxHP);
             case "t_hp":
                 return new Vector2(0, target.MaxHP);
+            case "u_chp":
+                return new Vector2(0, user.CurHP);
+            case "t_chp":
+                return new Vector2(0, target.CurHP);
             default:
                 {
                     EDebug.LogErrorFormat("expression2Attr failed, {0} is invalid", str);

@@ -196,14 +196,7 @@ public class BattleView : BattleViewBase
 
         }
     }
-    /// <summary>
-    /// 关闭战役界面
-    /// </summary>
-    public void BattleBtn()
-    {
-        UIFace.GetSingleton().Close(UIID.Battle);
-        //Transcript_obj.transform.parent.gameObject.SetActive(false);
-    }
+
     /// <summary>
     /// 点击普通副本切换按钮
     /// </summary>

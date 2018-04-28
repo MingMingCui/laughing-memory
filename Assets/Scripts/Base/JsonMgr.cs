@@ -28,7 +28,6 @@ public class LevelData
     public int power;   //消耗的体力
     public int times; //挑战次数
     public int[] monster;  //怪物
-    public int[] drop;    //掉落
     public string desc;   //关卡简介
     public int[] monster_tip; //怪物提示
     public int[] drop_tip;    //掉落提示
@@ -160,7 +159,6 @@ public class JsonMgr
                         power = _levelBuffer[levelId]["power"].ToObject<int>(), //消耗的体力
                         times = _levelBuffer[levelId]["times"].ToObject<int>(), //挑战次数
                         monster = Util.Str2IntArr(_levelBuffer[levelId]["monster"].ToString()), //怪物
-                        drop = Util.Str2IntArr(_levelBuffer[levelId]["drop"].ToString()),    //掉落
                         desc = _levelBuffer[levelId]["desc"].ToString(),   //关卡简介
                         monster_tip = Util.Str2IntArr(_levelBuffer[levelId]["monster_tip"].ToString()), //怪物提示
                         drop_tip = Util.Str2IntArr(_levelBuffer[levelId]["drop_tip"].ToString()),  //掉落提示
@@ -567,20 +565,51 @@ public class JsonMgr
     /// </summary>
     /// <param name="_isMen"></param>
     /// <returns></returns>
-    public string RandomName(bool _isMen)
+    public string RandomName(int _isMen)
     {
         string Name = "";
         Name = Surname[UnityEngine.Random.Range(0, Surname.Count)];
-        if (_isMen)
+        switch (_isMen)
         {
-            Name += Man[UnityEngine.Random.Range(0, Man.Count)];
-        }
-        else
-        {
-            Name += Woman[UnityEngine.Random.Range(0, Woman.Count)];
+            case 1:
+                Name += Man[UnityEngine.Random.Range(0, Man.Count)];
+                break;
+            case 2:
+                Name += Woman[UnityEngine.Random.Range(0, Woman.Count)];
+                break;
+            default:
+                Debug.Log("角色性别不存在"+":"+ _isMen);
+                break;
         }
         return Name;
     }
+
+    private List<string> ShieldWordList = new List<string>(); //屏蔽字库
+    /// <summary>
+    /// 判断是否包含屏蔽字
+    /// </summary>
+    /// <param name="_name"></param>
+    /// <returns></returns>
+    public bool ExamineShieldWord(string _name)
+    {
+        if (ShieldWordList.Count == 0)
+        {
+            string ShieldWord = ResourceMgr.Instance.LoadData("ShieldWord");
+            ShieldWordList = ShieldWord.Split(new string[] { "\r\n" }, StringSplitOptions.None).ToList();
+            ShieldWordList = ShieldWordList.Where(s => !string.IsNullOrEmpty(s)).ToList(); //检查是否有空字符串
+        }
+        bool isInclude = true;
+        for (int idx = 0; idx < ShieldWordList.Count; idx++)
+        {
+            if (_name.IndexOf(ShieldWordList[idx]) != -1)
+            {
+                isInclude = false;
+                return isInclude;
+            }
+        }
+        return isInclude;
+    }
+
     /// <summary>
     /// 通过ID获取月份道具信息
     /// </summary>

@@ -233,10 +233,10 @@ public class HeroDetailViewBase : UIViewBase
         DownContent_obj = mTransform.Find("Left_obj/Template_obj/Viewport/DownContent_obj").gameObject;
         divi_txt = mTransform.Find("Left_obj/Template_obj/Viewport/DownContent_obj/divi_txt").GetComponent<Text>();
         Power_txt = mTransform.Find("Left_obj/Power/Power_txt").GetComponent<Text>();
-        Dress_btn = mTransform.Find("Left_obj/Equip_obj/Dress_btn").GetComponent<Button>();
-        Intensify_btn = mTransform.Find("Left_obj/Equip_obj/Intensify_btn").GetComponent<Button>();
-        takeoff_btn = mTransform.Find("Left_obj/Divination_obj/takeoff_btn").GetComponent<Button>();
-        take_btn = mTransform.Find("Left_obj/Divination_obj/take_btn").GetComponent<Button>();
+        Dress_btn = mTransform.Find("Left_obj/Dress_btn").GetComponent<Button>();
+        Intensify_btn = mTransform.Find("Left_obj/Intensify_btn").GetComponent<Button>();
+        takeoff_btn = mTransform.Find("Left_obj/takeoff_btn").GetComponent<Button>();
+        take_btn = mTransform.Find("Left_obj/take_btn").GetComponent<Button>();
         Name_txt = mTransform.Find("Left_obj/Name_txt").GetComponent<Text>();
         Exp_slider = mTransform.Find("Left_obj/Exp_slider").GetComponent<Slider>();
         Exp_txt = mTransform.Find("Left_obj/Exp_slider/Exp_txt").GetComponent<Text>();

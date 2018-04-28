@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public class UISprite : MonoBehaviour
 {
     [HideInInspector]
     public string movieName;
     public List<Sprite> Sprites;
     public float fSep = 0.05f;
+
+    public bool playOnce;
+
+    private bool play  = true;
 
     public float showerWidth
     {
@@ -40,10 +45,22 @@ public class UISprite : MonoBehaviour
         {
             movieName = "movieName";
         }
+        if (playOnce)
+        {
+            play = false;
+            RegistMovieEvent(Sprites.Count - 1, delegate { shower.gameObject.SetActive(false); play = false; });
+        }
     }
     void Start()
     {
         Play(curFrame);
+    }
+
+    public void Play()
+    {
+        shower.gameObject.SetActive(true);
+        curFrame = 0;
+        play = true;
     }
 
     public void Play(int iFrame)
@@ -58,10 +75,7 @@ public class UISprite : MonoBehaviour
 
         if (dMovieEvents.ContainsKey(iFrame))
         {
-            foreach (delegateMovieEvent del in dMovieEvents[iFrame])
-            {
-                del();
-            }
+            dMovieEvents[iFrame]();
         }
     }
 
@@ -76,9 +90,12 @@ public class UISprite : MonoBehaviour
         }
     }
 
+
     float fDelta = 0;
     void Update()
     {
+        if (!play)
+            return;
         fDelta += Time.deltaTime;
         if (fDelta > fSep)
         {
@@ -89,24 +106,24 @@ public class UISprite : MonoBehaviour
     }
 
     public delegate void delegateMovieEvent();
-    private Dictionary<int, List<delegateMovieEvent>> dMovieEvents = new Dictionary<int, List<delegateMovieEvent>>();
+    private Dictionary<int, delegateMovieEvent> dMovieEvents = new Dictionary<int, delegateMovieEvent>();
     public void RegistMovieEvent(int frame, delegateMovieEvent delEvent)
     {
         if (!dMovieEvents.ContainsKey(frame))
         {
-            dMovieEvents.Add(frame, new List<delegateMovieEvent>());
+            dMovieEvents.Add(frame, delEvent);
         }
-        dMovieEvents[frame].Add(delEvent);
+        else
+        {
+            dMovieEvents[frame] += delEvent;
+        }
     }
     public void UnregistMovieEvent(int frame, delegateMovieEvent delEvent)
     {
         if (!dMovieEvents.ContainsKey(frame))
-        {
             return;
-        }
-        if (dMovieEvents[frame].Contains(delEvent))
-        {
-            dMovieEvents[frame].Remove(delEvent);
-        }
+        if(dMovieEvents[frame] != null)
+            dMovieEvents[frame] -= delEvent;
     }
+
 }

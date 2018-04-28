@@ -67,7 +67,7 @@ public class SelectPerCtrl : UICtrlBase<SelectPerView>
             Debug.Log("请输入名字");
             return;
         }
-        if (this.mView.ExamineShieldWord(this.mView.Import_input.text))
+        if (JsonMgr.GetSingleton().ExamineShieldWord(this.mView.Import_input.text))
         {
             OnCreateRole(this.mView.Import_input.text,this.mView.isMan,(int)this.mView.role);
         }

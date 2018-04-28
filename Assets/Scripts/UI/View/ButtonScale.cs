@@ -12,11 +12,7 @@ public class ButtonScale : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [HideInInspector]
     public RectTransform rect = null;
     public Vector2Int[] ItemData;
-    void Start ()
-    {
-       
 
-    }
     public void OnPointerDown(PointerEventData eventData)
     {
         if (false == isShow)
@@ -26,7 +22,7 @@ public class ButtonScale : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         else
         {
             Debug.Log(rect.gameObject.name);
-            TipsMgr.OpenTreasureTip(rect.localPosition, ItemData, Alignment.M,new Vector2(-50,180));
+            TipsMgr.OpenTreasureTip(rect.localPosition, ItemData, Alignment.M,new Vector2(-50,230));
         }
        
     }

@@ -17,10 +17,13 @@ public enum UIID : int
     Mail = 1018,       //邮箱界面
     GM = 1019,        //GM界面
     Customs =1020,   //关卡简介界面
+    Majesty = 1021,   //主公系统界面
     Shop = 1201,      //商店界面
     WesternShop = 1202,      //西域商店界面
     Recruiting = 1203,      //招募界面
     ShopItem = 1204,        //商店货物界面
+    RecruitingAward = 1205, //招募抽奖界面
+    RecruitingProbability = 1206, //招募概率界面
 
     //----------------C1101-1200M 崔明明 ----------------//
     Hero = 1008,    //武将界面
@@ -35,6 +38,7 @@ public enum UIID : int
     StrengthenTip = 1105,  //强化提示
     Strengthen = 1106, //强化界面
     EuqipTipCtrl = 1107, //进阶提示
+
 
     //--------------C1301-1400 董小雨 -----------------//
     Corps = 1301,     //军团创建、加入
@@ -90,7 +94,10 @@ public class UIFace :UIMgr
         Registration(UIID.Strengthen,new StrengthenCtrl());
         Registration(UIID.StrengthenTip,new StrengthenTipCtrl());
         Registration(UIID.EuqipTipCtrl, new EuqipTipCtrl());
+        Registration(UIID.RecruitingAward, new RecruitingAwardCtrl());
         Registration(UIID.Arena, new ArenaCtrl());
+        Registration(UIID.Majesty, new MajestyCtrl());
+        Registration(UIID.RecruitingProbability, new RecruitingProbabilityCtrl());
         ZEventSystem.Register(EventConst.NAVIGATIONBACK, this, "CallBack");
     }
     private NavigationCtrl navigat;

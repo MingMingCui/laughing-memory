@@ -1,15 +1,20 @@
 ﻿using JsonData;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class NavigationView : NavigationViewBase
 {
     private AlphaTween at;
 
     public GameObject item;
-
+    [HideInInspector]
+    public Button Head = null;
     public void Open()
     {
+        if (Head == null)
+        {
+            Head = Head_img.GetComponent<Button>();
+        }
         Name_txt.text = Role.Instance.RoleName;
         Head_img.sprite = ResourceMgr.Instance.LoadSprite(Role.Instance.HeadId);
         grade_txt.text = Role.Instance.Level.ToString();
@@ -55,9 +60,12 @@ public class NavigationView : NavigationViewBase
         if (null != base.canvas)
         {
             base.canvas.overrideSorting = true;
-            base.canvas.sortingLayerName = config.Layer;
-            //order最大值与最小值  -32768 和 32767
-            base.canvas.sortingOrder = config.Back >= 2 ? -32768 : 32767; 
+            if(!config.Layer.EndsWith("UI3"))
+            {
+                base.canvas.sortingLayerName = config.Layer;
+                //order最大值与最小值  -32768 和 32767
+                base.canvas.sortingOrder = config.Back >= 2 ? -32768 : 32767;
+            }
         }
     }
 

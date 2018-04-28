@@ -29,7 +29,7 @@ public class CustomsPassCtrl: UICtrlBase<CustomsPassView>
             this.mView.operation_10_btn.onClick.AddListener(delegate () { });
             this.mView.operation_btn.onClick.AddListener(delegate () { });
             this.mView.embattle_btn.onClick.AddListener(delegate() { UIFace.GetSingleton().Open(UIID.Stub, 0); });
-            this.mView.begin_btn.onClick.AddListener(delegate() { BattleMgr.Instance.BeginCombat(BattleMgr.Instance.LevelID); });
+            this.mView.begin_btn.onClick.AddListener(delegate() { OpenCombat();  });
             //  this.mView.Woman1_tog.onValueChanged.AddListener((bool value) => this.mView.CutRole(false, this.mView.Woman1_tog.gameObject));
         }
         else
@@ -59,6 +59,18 @@ public class CustomsPassCtrl: UICtrlBase<CustomsPassView>
     public override void OnDestroy()
     {
         base.OnDestroy();
+    }
+    public void OpenCombat()
+    {
+        if (Role.Instance.Power > this.mView.Power)
+        {
+            BattleMgr.Instance.BeginCombat(BattleMgr.Instance.LevelID, this.mView.Power);
+        }
+        else
+        {
+            CanvasView.Instance.AddNotice("体力不足");
+        }
+       
     }
 
 }

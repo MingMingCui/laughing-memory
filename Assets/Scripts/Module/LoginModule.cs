@@ -27,7 +27,7 @@ public class LoginModule : ModuleBase
         Role.Instance.Cash = loginResponse.coins;
         Role.Instance.Gold = loginResponse.golds;
         Role.Instance.LockedGold = loginResponse.bind_golds;
-
+        Role.Instance.Sex = loginResponse.base_data.sex;
         var stubdata = Role.Instance.GetStubData(StubType.PVE);
         stubdata.Clear();
         if (loginResponse.formation != null)

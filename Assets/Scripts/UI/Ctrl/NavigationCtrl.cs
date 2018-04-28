@@ -13,6 +13,7 @@ public class NavigationCtrl : UICtrlBase<NavigationView>
     {
         base.OnOpen();
         mView.Open();
+        this.mView.Head.onClick.AddListener(delegate() { OpenMajesty(); });
         ZEventSystem.Register(EventConst.UpdateData, this, "UpdateData");
     }
     public void Refresh(UIConfig config)
@@ -29,6 +30,7 @@ public class NavigationCtrl : UICtrlBase<NavigationView>
     public override bool OnClose()
     {
         base.OnClose();
+        this.mView.Head.onClick.RemoveAllListeners();
         ZEventSystem.DeRegister(EventConst.UpdateData, this);
         return true;
     }
@@ -41,6 +43,9 @@ public class NavigationCtrl : UICtrlBase<NavigationView>
     {
         this.mView.Open();
     }
-
+    public void OpenMajesty()
+    {
+        UIFace.GetSingleton().Open(UIID.Majesty);
+    }
 
 }

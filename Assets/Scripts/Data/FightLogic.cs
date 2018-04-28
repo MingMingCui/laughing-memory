@@ -126,6 +126,9 @@ public class FightLogic : Singleton<FightLogic>, IUpdate {
         }
     }
 
+    //战斗暂停，影响战斗时间、FightUnit用技能以及Buff生效
+    public bool FightPause = false;
+
     //比赛回合总时间
     public float RoundTime = 0;
     //比赛回合累计时间
@@ -799,10 +802,13 @@ public class FightLogic : Singleton<FightLogic>, IUpdate {
             FightUnit unit = AllFighters[idx];
 
             //自动放大招，写在外面防止被暂停
-            if (!unit.IsDead && (unit.IsEnemy || unit.IsSummon || (!unit.IsEnemy && FightLogic.Instance.IsAutoFight)))
+            if (!FightPause)
             {
-                if(unit.State != FightUnitState.Skill || unit.SklState == SkillState.Post)
-                    unit.UseActiveSkill();
+                if (!unit.IsDead && (unit.IsEnemy || unit.IsSummon || (!unit.IsEnemy && FightLogic.Instance.IsAutoFight)))
+                {
+                    if (unit.State != FightUnitState.Skill || unit.SklState == SkillState.Post)
+                        unit.UseActiveSkill();
+                }
             }
 
             if (UnitPause && !unit.IsUsingActiveSkill && !unit.SkillMgrObj.IsWaitActiveSkill())
@@ -816,7 +822,7 @@ public class FightLogic : Singleton<FightLogic>, IUpdate {
         DropMgrObj.Update();    //不需要暂停
 
         //游戏超时，判输
-        if (State == FightState.Fight || State == FightState.Prepare)
+        if (!FightPause && (State == FightState.Fight || State == FightState.Prepare))
         {
             this.AccRoundTime += delta;
             if (AccRoundTime >= RoundTime)

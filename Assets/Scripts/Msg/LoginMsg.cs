@@ -30,8 +30,6 @@ namespace Msg.LoginMsg
         public string nickname;             //显示名字
         public string union_id;             //唯一id，先留着
         public string user_id;              //6位唯一id
-        public int sex;                     //性别
-        public int face_id;                 //头像
         public int levels;                  //等级
         public int coins;                   //铜钱
         public int golds;                   //钻石

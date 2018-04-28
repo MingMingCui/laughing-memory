@@ -287,7 +287,7 @@ public class Client :  Singleton<Client>, IUpdate
                     }
                     catch (SocketException se)
                     {
-                        EDebug.LogErrorFormat("Client KeepAlive Socket Exception {0}",  se.Message);
+                        EDebug.LogErrorFormat("Client KeepAlive Socket Exception {0}", se.Message);
                         OnDisconnect();
                         return;
                     }

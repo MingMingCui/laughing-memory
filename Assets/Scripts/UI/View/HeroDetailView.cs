@@ -258,7 +258,11 @@ public class HeroDetailView : HeroDetailViewBase
         if (Divination_obj.activeInHierarchy)
         {
             Divination_obj.SetActive(false);
+            takeoff_btn.gameObject.SetActive(false);
+            take_btn.gameObject.SetActive(false);
             Equip_obj.SetActive(true);
+            Dress_btn.gameObject.SetActive(true);
+            Intensify_btn.gameObject.SetActive(true);
         }
         ShowLeft();
         switch (type)
@@ -702,6 +706,10 @@ public class HeroDetailView : HeroDetailViewBase
         showGo = Divination_trf;
         showGo.SetParent(Right_trf);
         Divination_obj.SetActive(true);
+        takeoff_btn.gameObject.SetActive(true);
+        take_btn.gameObject.SetActive(true);
+        Dress_btn.gameObject.SetActive(false);
+        Intensify_btn.gameObject.SetActive(false);
         Equip_obj.SetActive(false);
         HeroDivinationView hdv = Divination_obj.GetComponent<HeroDivinationView>();
         hdv.SetHeroTotemView(heroData);
@@ -752,7 +760,7 @@ public class HeroDetailView : HeroDetailViewBase
         }
 
         Vector2 size = divination_sr.content.sizeDelta;
-        size.y = Mathf.CeilToInt(mData.Length / 3f) * 187 + 65;
+        size.y = Mathf.CeilToInt(mData.Length / 3f) * 159 + 26;
         divination_sr.content.sizeDelta = size;
 
         EventListener.Get(take_btn.gameObject).OnClick = e=>

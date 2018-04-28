@@ -174,16 +174,42 @@ public class ShopUIView: ShopUIViewBase
         {
             if (curGoodsId == goodsList[i].goodsUIId)
             {
-                goodsList[i].SoldOut_btn.gameObject.SetActive(true);
-                ShopMgr.Instance.goodsList[(int)ShopMgr.Instance.shoptype][i].num = 0;
                 if (goodsList[i].Currency == 1)
-                    Role.Instance.Cash -= int.Parse(goodsList[i].price_txt.text);
-                else if(goodsList[i].Currency == 2)
-                    Role.Instance.Gold -= int.Parse(goodsList[i].price_txt.text);
-                int num = 0;
-                if (goodsList[i].goodsnum_txt.text.Length == 0) num = 1;
-                else num = int.Parse(goodsList[i].goodsnum_txt.text);
-            //    ItemMgr.Instance.UpdateItem(ShopMgr.Instance.GetItemIDByUIID((int)ShopMgr.Instance.shoptype,goodsList[i].goodsUIId),num);
+                {
+                    if (Role.Instance.Cash < int.Parse(goodsList[i].price_txt.text))
+                    {
+                        CanvasView.Instance.AddNotice("铜钱不足！");
+                        //currencytips_obj.SetActive(true);
+                        //currencytip_txt.text = "铜钱不足！";
+                        //curcg.alpha = 1;
+                        //CurrencyTip();
+                        return;
+                    }
+                }
+                else if (goodsList[i].Currency == 2)
+                {
+                    if (Role.Instance.Gold < int.Parse(goodsList[i].price_txt.text))
+                    {
+                        CanvasView.Instance.AddNotice("金锭不足，无法购买！");
+                        //currencytips_obj.SetActive(true);                       
+                        //currencytip_txt.text = "金锭不足，无法购买！";
+                        //curcg.alpha = 1;
+                        //CurrencyTip();
+                        return;
+                    }
+
+                }
+                    goodsList[i].SoldOut_btn.gameObject.SetActive(true);
+                    ShopMgr.Instance.goodsList[(int)ShopMgr.Instance.shoptype][i].num = 0;
+                    if (goodsList[i].Currency == 1)
+                        Role.Instance.Cash -= int.Parse(goodsList[i].price_txt.text);
+                    else if (goodsList[i].Currency == 2)
+                        Role.Instance.Gold -= int.Parse(goodsList[i].price_txt.text);
+                    int num = 0;
+                    if (goodsList[i].goodsnum_txt.text.Length == 0) num = 1;
+                    else num = int.Parse(goodsList[i].goodsnum_txt.text);
+                    Debug.Log(Role.Instance.Gold);
+                
             }
         }
     }
@@ -280,28 +306,28 @@ public class ShopUIView: ShopUIViewBase
             if (goods.goodsUIId == goodsList[i].goodsUIId)
             {
                 goodsUI = goodsList[i];
-                if (goodsList[i].Currency == 1)
-                {
-                    if (Role.Instance.Cash < int.Parse(goodsList[i].price_txt.text))
-                    {
-                        currencytips_obj.SetActive(true);
-                        currencytip_txt.text = "铜钱不足！";
-                        curcg.alpha = 1;
-                        CurrencyTip();
-                        return;
-                    }
-                }
-                else if (goodsList[i].Currency == 2)
-                {
-                    if (Role.Instance.Gold < int.Parse(goodsList[i].price_txt.text))
-                    {
-                        currencytips_obj.SetActive(true);
-                        currencytip_txt.text = "金锭不足，无法购买！";
-                        curcg.alpha = 1;
-                        CurrencyTip();
-                        return;
-                    }
-                }
+                //if (goodsList[i].Currency == 1)
+                //{
+                //    if (Role.Instance.Cash < int.Parse(goodsList[i].price_txt.text))
+                //    {
+                //        currencytips_obj.SetActive(true);
+                //        currencytip_txt.text = "铜钱不足！";
+                //        curcg.alpha = 1;
+                //        CurrencyTip();
+                //        return;
+                //    }
+                //}
+                //else if (goodsList[i].Currency == 2)
+                //{
+                //    if (Role.Instance.Gold < int.Parse(goodsList[i].price_txt.text))
+                //    {
+                //        currencytips_obj.SetActive(true);
+                //        currencytip_txt.text = "金锭不足，无法购买！";
+                //        curcg.alpha = 1;
+                //        CurrencyTip();
+                //        return;
+                //    }
+                //}
             }
         }
         curGoodsId = goodsUI.goodsUIId;
@@ -393,6 +419,7 @@ public class ShopUIView: ShopUIViewBase
     {
         if (ShopMgr.Instance.goodsList.Count <= 0) return;
         if (!ShopMgr.Instance.goodsList.ContainsKey(shoptype)) return;
+        if (goodsList.Count < 0) return;
         if (grid == null)
         {
             grid = goodslist_obj.GetComponent<GridLayoutGroup>();
@@ -404,8 +431,6 @@ public class ShopUIView: ShopUIViewBase
         for (int i = 0; i < goodsList.Count; i++)
         {
             ItemConfig item = JsonMgr.GetSingleton().GetItemConfigByID(shop[i].item_id);
-           
-
             switch (shop[i].num)
             {
                 case 0:
@@ -453,12 +478,10 @@ public class ShopUIView: ShopUIViewBase
             goodsList[i].price_txt.text = (shop[i].price*shop[i].num).ToString();
 
         }
-
         //滑动窗显示
         int num = (int)(srrect.sizeDelta.x / grid.cellSize.x);
         rect.offsetMin = Vector2.zero;
         rect.offsetMax = new Vector2(grid.cellSize.x*((goodsList.Count*0.5f)- num)+ grid.spacing.x, 0);
-       // rect.localPosition = Vector2.zero;
     }
 
     /// <summary>
